@@ -1,43 +1,36 @@
 package huffman;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 public class App {
 
 	public static void main(String[] args) throws IOException {
 
 		String filePath = "original text.txt";
+		String tableFile = "huffman table.txt";
 		String encodingFile = "huffman encoding.txt";
 		String decodingFile = "huffman decoding.txt";
 
-		Scanner scanner = new Scanner(System.in);
+		System.out.println("[ ENCODING\t▷\tDECODING\t▷\tEXIT ]");
+		HuffmanCode hc = new HuffmanCode();
 
-		System.out.println("!] 1.Encoding \t 2.Decoding \t 0.Exit");
-		int mode = scanner.nextInt();
-		scanner.nextLine();
-
-		if (mode == 0) {
-			System.out.println("!] EXIT.");
-
-		} else {
-			while (mode > 0 && mode < 3) {
-
-				HuffmanCode hc = new HuffmanCode();
-
-				if (mode == 1) {
+		System.out.println("!] Add Tree Element.");
+		hc.treeRead(filePath);
 					
-					hc.treeRead(filePath);
+		System.out.println("!] Run Huffman.");
+		Node t = hc.huffman();
+					
+		System.out.println("!] Create Table Txt.");
+		hc.createTable(t);
+		hc.writeTableTxt(tableFile);
+		
+		System.out.println("!] Create Encoding Txt.");
+		hc.encodingHuffman(filePath, encodingFile);
+		
+		System.out.println("!] Create Decoding Txt. ");
+		hc.decodingHuffman(encodingFile, decodingFile);
 
-				} else if (mode == 2) {
-
-				} else {
-					System.err.println("Error] INPUT MODE NUMBER ERROR.");
-					break;
-				}
-
-			}
-		}
+		System.out.println("!] DONE. ");
 
 	}
 
